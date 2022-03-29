@@ -8,7 +8,7 @@ public class SpawnManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] allBalls = new GameObject[5];
     [SerializeField] private GameObject[] levelBalls;
-    [SerializeField] private GameObject[] tubes;
+    public GameObject[] tubes;
 
     private LevelManager levelManager;
     private TubeController tubeController;
@@ -90,16 +90,16 @@ public class SpawnManager : MonoBehaviour
         switch (ballCountInTube)
         {
             case 0:
-                ballSpawnPositionY = 0.5f;
+                ballSpawnPositionY = 1f;
                 break;
             case 1:
-                ballSpawnPositionY = 1.75f;
-                break;
-            case 2:
                 ballSpawnPositionY = 3f;
                 break;
+            case 2:
+                ballSpawnPositionY = 5f;
+                break;
             case 3:
-                ballSpawnPositionY = 4.25f;
+                ballSpawnPositionY = 7f;
                 break;
         }
 

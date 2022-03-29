@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4983393496586326685}
   - component: {fileID: -1798742446275650100}
   - component: {fileID: 1515378921569121373}
+  - component: {fileID: 1902345665415690204}
   m_Layer: 0
   m_Name: Glass Tube
   m_TagString: Tube
@@ -27,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 1054814726048221091}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 4983033998399112773}
   m_Father: {fileID: 0}
@@ -59,10 +60,22 @@ BoxCollider:
   m_GameObject: {fileID: 1054814726048221091}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.7324388, y: 6.0858474, z: 1.1289707}
   m_Center: {x: 0, y: 2.5429237, z: 0}
+--- !u!114 &1902345665415690204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1054814726048221091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a174d574806892840ac4ae8cfc0ea6f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6455730229963979498
 GameObject:
   m_ObjectHideFlags: 0
