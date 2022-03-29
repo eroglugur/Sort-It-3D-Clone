@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4983393496586326685}
   - component: {fileID: -1798742446275650100}
+  - component: {fileID: 1515378921569121373}
   m_Layer: 0
   m_Name: Glass Tube
   m_TagString: Tube
@@ -44,11 +45,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccaf54335a293b0419521f07d088745f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spheres:
+  balls:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+--- !u!65 &1515378921569121373
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1054814726048221091}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 1.7324388, y: 6.0858474, z: 1.1289707}
+  m_Center: {x: 0, y: 2.5429237, z: 0}
 --- !u!1 &6455730229963979498
 GameObject:
   m_ObjectHideFlags: 0

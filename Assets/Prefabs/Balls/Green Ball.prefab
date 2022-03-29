@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 4058465895551934758}
   - component: {fileID: 4058465895551934759}
   - component: {fileID: -201337677299320177}
+  - component: {fileID: -6101786469456007729}
+  - component: {fileID: 4985549725864244426}
   m_Layer: 0
   m_Name: Green Ball
   m_TagString: Untagged
@@ -106,5 +108,33 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 665e021c44be74443b075c6da11d2316, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &-6101786469456007729
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4058465895551934752}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &4985549725864244426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4058465895551934752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a174d574806892840ac4ae8cfc0ea6f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

@@ -1,18 +1,27 @@
+using System;
 using UnityEngine;
 
 public class BallController : MonoBehaviour
 {
+    private Movement movement;
+    private TubeController tubeController;
     
-    
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
+        movement = GetComponent<Movement>();
+        tubeController = FindObjectOfType<TubeController>();
     }
 
-    // Update is called once per frame
-    void Update()
+   private void Update()
     {
-        
+        if (transform.position.y == 4.25f)
+        {
+            movement.enabled = true;
+        }
+        else
+        {
+            movement.enabled = false;
+        }
     }
+
 }

@@ -3,16 +3,21 @@ using UnityEngine;
 
 public class TubeController : MonoBehaviour
 {
-    [SerializeField] private GameObject[] spheres = new GameObject[4];
+    [SerializeField] private GameObject[] balls = new GameObject[4];
 
     private int blue, red, yellow, green, orange = 0;
+
+    public GameObject GetBall()
+    {
+        int sphereNumber = CheckTubeElements() - 1;
+        return balls[sphereNumber];
+    }
 
     // Removes the latest added ball from the array
     public void RemoveBall()
     {
         int sphereNumber = CheckTubeElements() - 1;
-        spheres[sphereNumber] = null;
-        Debug.Log(CheckTubeElements());
+        balls[sphereNumber] = null;
     }
 
     // Adds the ball to the first empty element of the array
@@ -38,7 +43,7 @@ public class TubeController : MonoBehaviour
         }
 
         int sphereNumber = CheckTubeElements();
-        spheres[sphereNumber] = ball;
+        balls[sphereNumber] = ball;
     }
 
     public bool HasMoreThanThreeSameColors()
@@ -56,7 +61,7 @@ public class TubeController : MonoBehaviour
     {
         int sphereCount = 0;
 
-        foreach (GameObject sphere in spheres)
+        foreach (GameObject sphere in balls)
         {
             if (sphere == null)
             {
@@ -70,4 +75,5 @@ public class TubeController : MonoBehaviour
 
         return sphereCount;
     }
+
 }
