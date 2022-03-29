@@ -849,6 +849,10 @@ PrefabInstance:
       propertyPath: balls.Array.size
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 5238318246155747967, guid: 7e2353f867215594c88f276bcbb12a3d, type: 3}
+      propertyPath: balls.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6035692917392337117, guid: 7e2353f867215594c88f276bcbb12a3d, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -857,6 +861,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1281269974}
+    - target: {fileID: 7038315715729597162, guid: 7e2353f867215594c88f276bcbb12a3d, type: 3}
+      propertyPath: balls.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 8853011235847457198, guid: 7e2353f867215594c88f276bcbb12a3d, type: 3}
       propertyPath: m_Mesh
       value: 

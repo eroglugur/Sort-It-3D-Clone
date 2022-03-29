@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 6463871234474720843}
   - component: {fileID: 6463871234474720836}
   - component: {fileID: 6463871234474720837}
-  - component: {fileID: 8941476225574310398}
   - component: {fileID: -6309858298955099580}
+  - component: {fileID: 8941476225574310398}
   - component: {fileID: 5688990682679375752}
   m_Layer: 0
   m_Name: Purple Ball
@@ -98,18 +98,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8941476225574310398
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6463871234474720838}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 665e021c44be74443b075c6da11d2316, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &-6309858298955099580
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -126,6 +114,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8941476225574310398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6463871234474720838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 665e021c44be74443b075c6da11d2316, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5688990682679375752
 MonoBehaviour:
   m_ObjectHideFlags: 0

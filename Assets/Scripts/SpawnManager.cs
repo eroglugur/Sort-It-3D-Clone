@@ -69,8 +69,7 @@ public class SpawnManager : MonoBehaviour
                 
                 GameObject ballToSpawn = levelBalls[ballIndex];
 
-                tubes[i].GetComponent<TubeController>().AddBall(ballToSpawn);
-                Instantiate(ballToSpawn, GetSpawnPosition(tubes[i]), Quaternion.identity);
+                tubes[i].GetComponent<TubeController>().AddBall(ballToSpawn, GetSpawnPosition(tubes[i]));
             }
         }
     }
@@ -90,16 +89,16 @@ public class SpawnManager : MonoBehaviour
 
         switch (ballCountInTube)
         {
-            case 1:
+            case 0:
                 ballSpawnPositionY = 0.5f;
                 break;
-            case 2:
+            case 1:
                 ballSpawnPositionY = 1.75f;
                 break;
-            case 3:
+            case 2:
                 ballSpawnPositionY = 3f;
                 break;
-            case 4:
+            case 3:
                 ballSpawnPositionY = 4.25f;
                 break;
         }

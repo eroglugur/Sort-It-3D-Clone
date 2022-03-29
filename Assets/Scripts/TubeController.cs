@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class TubeController : MonoBehaviour
 {
-    [SerializeField] private GameObject[] balls = new GameObject[4];
+    public GameObject[] balls = new GameObject[4];
 
     private int blue, red, yellow, green, orange = 0;
 
@@ -21,7 +21,7 @@ public class TubeController : MonoBehaviour
     }
 
     // Adds the ball to the first empty element of the array
-    public void AddBall(GameObject ball)
+    public void AddBall(GameObject ball, Vector3 spawnPosition)
     {
         switch (ball.name)
         {
@@ -43,7 +43,7 @@ public class TubeController : MonoBehaviour
         }
 
         int sphereNumber = CheckTubeElements();
-        balls[sphereNumber] = ball;
+        balls[sphereNumber] = Instantiate(ball, spawnPosition, Quaternion.identity);
     }
 
     public bool HasMoreThanThreeSameColors()
