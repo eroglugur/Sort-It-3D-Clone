@@ -69,7 +69,7 @@ public class SpawnManager : MonoBehaviour
                 
                 GameObject ballToSpawn = levelBalls[ballIndex];
 
-                tubes[i].GetComponent<TubeController>().AddBall(ballToSpawn, GetSpawnPosition(tubes[i]));
+                tubes[i].GetComponent<TubeController>().SpawnBallsAtStart(ballToSpawn, GetSpawnPosition(tubes[i]));
             }
         }
     }

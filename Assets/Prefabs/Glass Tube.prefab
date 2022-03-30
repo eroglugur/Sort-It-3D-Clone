@@ -51,6 +51,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  isTubeFull: 0
+  isBallUp: 0
 --- !u!65 &1515378921569121373
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -71,11 +73,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1054814726048221091}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a174d574806892840ac4ae8cfc0ea6f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  touched: 0
+  isUp: 0
 --- !u!1 &6455730229963979498
 GameObject:
   m_ObjectHideFlags: 0

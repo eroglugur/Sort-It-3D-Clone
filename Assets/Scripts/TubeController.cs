@@ -6,6 +6,7 @@ public class TubeController : MonoBehaviour
 {
     public GameObject[] balls = new GameObject[4];
     public bool isTubeFull;
+    public bool hasRemoved = false;
 
     private int blue, red, yellow, green, orange = 0;
 
@@ -35,12 +36,17 @@ public class TubeController : MonoBehaviour
     // Removes the latest added ball from the array
     public void RemoveBall()
     {
-        int sphereNumber = CheckTubeElements() - 1;
-        balls[sphereNumber] = null;
+        if (!hasRemoved)
+        {
+            int sphereNumber = CheckTubeElements() - 1;
+            balls[sphereNumber] = null;
+            hasRemoved = true;
+            Debug.Log(sphereNumber);
+        }
     }
 
-    // Adds the ball to the first empty element of the array
-    public void AddBall(GameObject ball, Vector3 spawnPosition)
+    // Spawns the ball to the first empty elements of the array
+    public void SpawnBallsAtStart(GameObject ball, Vector3 spawnPosition)
     {
         if (!isTubeFull)
         {
@@ -65,6 +71,35 @@ public class TubeController : MonoBehaviour
 
             int sphereNumber = CheckTubeElements();
             balls[sphereNumber] = Instantiate(ball, spawnPosition, Quaternion.identity);
+        }
+    }
+    
+    // Adds the ball to the first empty element of the array
+    public void AddBall(GameObject ball)
+    {
+        if (!isTubeFull)
+        {
+            switch (ball.name)
+            {
+                case "Blue Ball":
+                    blue++;
+                    break;
+                case "Red Ball":
+                    red++;
+                    break;
+                case "Yellow Ball":
+                    yellow++;
+                    break;
+                case "Green Ball":
+                    green++;
+                    break;
+                case "Orange Ball":
+                    orange++;
+                    break;
+            }
+
+            int sphereNumber = CheckTubeElements();
+            balls[sphereNumber] = ball;
         }
     }
 

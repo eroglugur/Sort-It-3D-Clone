@@ -6,89 +6,66 @@ using DG.Tweening;
 
 public class Movement : MonoBehaviour
 {
-    private TubeController tubeController;
-    private SpawnManager spawnManager;
-    private GameObject ball;
-
     private float ballRiseValueY = 11.0f;
-    private float ballRiseTime = 0.5f;
+    private float ballPlaceValueY = 11.0f;
+    private float ballMoveTime = 0.5f;
 
-    private float ballPosY;
-    [SerializeField] private bool touched;
-    [SerializeField] private bool isUp = false;
+    [SerializeField] private GameObject[] ball = new GameObject[1];
 
-    TouchPhase touchPhase = TouchPhase.Ended;
-
+    private Movement movement;
+    
     private void Start()
     {
-        DOTween.Init();
-        tubeController = GetComponent<TubeController>();
-        spawnManager = FindObjectOfType<SpawnManager>();
+        movement = GetComponent<Movement>();
+        movement.enabled = false;
     }
 
-    private void Update()
-    {
-        Move();
-    }
 
-    void Move()
+    public void RiseBall(GameObject touchedObject)
     {
-        if (Input.touchCount == 1 && Input.GetTouch(0).phase == touchPhase)
+        Debug.Log("Touched " + touchedObject.transform.name);
+
+        ball[0] = GetBall(touchedObject);
+
+        ball[0].transform.DOMoveY(ballRiseValueY, ballMoveTime);
+    }
+    
+    public void PlaceBall(GameObject touchedObject, GameObject ball)
+    {
+        Debug.Log("Touched " + touchedObject.transform.name);
+        
+        int ballCountInTube = touchedObject.GetComponent<TubeController>().CheckTubeElements();
+        
+        switch (ballCountInTube)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
-
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                Debug.Log(hit.transform.name);
-
-                if (hit.collider != null)
-                {
-                    GameObject touchedObject = hit.transform.gameObject;
-                    Debug.Log("Touched " + touchedObject.transform.name);
-                }
-            }
+            case 1:
+                ballPlaceValueY = 1f;
+                break;
+            case 2:
+                ballPlaceValueY = 3f;
+                break;
+            case 3:
+                ballPlaceValueY = 5f;
+                break;
+            case 4:
+                ballPlaceValueY = 7f;
+                break;
         }
         
-        if (!touched)
-        {
-            ball = tubeController.GetLatestAddedBall();
-            SetTouchedBoolValue(true);
-        }
-
-        if (!isUp)
-        {
-            RiseBall();
-            SetIsUpBoolValue(true);
-        }
-
+        ball.transform.DOMoveY(ballPlaceValueY, ballMoveTime);
     }
 
-    private void RiseBall()
+    public GameObject GetBall(GameObject touchedObject)
     {
-        if (!touched)
-        {
-            ballPosY = ball.gameObject.transform.position.y;
-            SetTouchedBoolValue(true);
-        }
-
-        ball.transform.DOMoveY(ballRiseValueY, ballRiseTime);
+        return touchedObject.GetComponent<TubeController>().GetLatestAddedBall();
     }
 
-    private void SetTouchedBoolValue(bool value)
+    public void SetDestination(GameObject touchedObject)
     {
-        foreach (var tube in spawnManager.tubes)
-        {
-            tube.GetComponent<Movement>().touched = value;
-        }
-    }
+        Vector3 direction = new Vector3(touchedObject.transform.position.x, ballRiseValueY, touchedObject.transform.position.z);
 
-    private void SetIsUpBoolValue(bool value)
-    {
-        foreach (var tube in spawnManager.tubes)
-        {
-            tube.GetComponent<Movement>().isUp = value;
-        }
+        ball[0].transform.DOMove(direction, ballMoveTime).OnComplete(() => PlaceBall(touchedObject, ball[0]));
+        touchedObject.GetComponent<TubeController>().AddBall(ball[0]);
+        
     }
 }
