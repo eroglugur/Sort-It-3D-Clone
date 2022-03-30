@@ -8,10 +8,12 @@ public class InputManager : MonoBehaviour
     [SerializeField] private GameObject[] ball = new GameObject[1];
 
     private BallController ballController;
+    private GameManager gameManager;
 
 
     private void Start()
     {
+        gameManager = FindObjectOfType<GameManager>();
         isBallInTube = true;
     }
 
@@ -22,28 +24,31 @@ public class InputManager : MonoBehaviour
 
     private void GetTouch()
     {
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
+        if (gameManager.isGameActive)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
-
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit) && hit.collider.gameObject.CompareTag("Tube"))
+            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
             {
-                touchedGameObject = hit.collider.gameObject;
+                Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
 
-                if (isBallInTube)
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit) && hit.collider.gameObject.CompareTag("Tube"))
                 {
-                    ball[0] = touchedGameObject.GetComponent<TubeController>().GetLatestAddedBall();
-                }
-                
-                if (touchedGameObject.GetComponent<TubeController>().isTubeFull && !isBallInTube)
-                {
-                    ball[0].GetComponent<BallController>().ShakeBall();
-                }
-                else
-                {
-                    ProcessTouch(touchedGameObject, ball[0]);
+                    touchedGameObject = hit.collider.gameObject;
+
+                    if (isBallInTube)
+                    {
+                        ball[0] = touchedGameObject.GetComponent<TubeController>().GetLatestAddedBall();
+                    }
+
+                    if (touchedGameObject.GetComponent<TubeController>().isTubeFull && !isBallInTube)
+                    {
+                        ball[0].GetComponent<BallController>().ShakeBall();
+                    }
+                    else
+                    {
+                        ProcessTouch(touchedGameObject, ball[0]);
+                    }
                 }
             }
         }

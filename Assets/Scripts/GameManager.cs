@@ -6,20 +6,22 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private List<GameObject> tubes = new List<GameObject>();
+    [SerializeField] private GameObject celebrationParticles;
+    
     public int completedTubes;
     public int tubesToBeCompleted;
 
     private LevelManager levelManager;
 
-    private bool isGameActive;
-    private bool isLevelWon;
+    public bool isGameActive;
     private bool tubeIncreased;
 
-    [SerializeField] private List<GameObject> tubes = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
     {
+        isGameActive = true;
         levelManager = FindObjectOfType<LevelManager>();
 
         tubesToBeCompleted = levelManager.levelIndex + 1;
@@ -32,19 +34,18 @@ public class GameManager : MonoBehaviour
     {
         if (completedTubes == tubesToBeCompleted)
         {
-            isLevelWon = true;
             CelebrateWin();
         }
-
-       
     }
 
     private void CelebrateWin()
     {
+        Instantiate(celebrationParticles);
         for (int i = 0; i < tubes.Count; i++)
         {
             tubes[i].GetComponent<TubeController>().enabled = true;
             StartCoroutine(tubes[i].GetComponent<TubeController>().ShakeTube());
+            tubes[i].GetComponent<TubeController>().enabled = false;
         }
     }
 
