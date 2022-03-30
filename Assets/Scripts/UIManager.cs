@@ -19,7 +19,7 @@ public class UIManager : MonoBehaviour
         gameManager = FindObjectOfType<GameManager>();
         levelManager = FindObjectOfType<LevelManager>();
 
-        levelText.text = "Level " + PlayerPrefs.GetInt("LevelIndex");
+        levelText.text = "Level " + levelManager.levelIndex;
     }
     
     public void Pause()
@@ -44,16 +44,19 @@ public class UIManager : MonoBehaviour
 
     public void Quit()
     {
+        Time.timeScale = 1;
         Application.Quit();
     }
 
     public void Restart()
     {
+        Time.timeScale = 1;
         levelManager.RestartScene();
     }
 
     public void NextLevel()
     {
+        Time.timeScale = 1;
         levelManager.LoadNextLevel();
     }
 }

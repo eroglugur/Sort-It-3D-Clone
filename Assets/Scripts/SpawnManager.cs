@@ -24,8 +24,8 @@ public class SpawnManager : MonoBehaviour
         tubeController = FindObjectOfType<TubeController>();
         levelManager = FindObjectOfType<LevelManager>();
 
-        ballTypes = PlayerPrefs.GetInt("LevelIndex") + 1;
-        tubeCount = PlayerPrefs.GetInt("LevelIndex") + 2;
+        ballTypes = levelManager.levelIndex + 1;
+        tubeCount = levelManager.levelIndex + 2;
 
         tubes = new GameObject[tubeCount];
         levelBalls = new GameObject[ballTypes];
@@ -34,6 +34,15 @@ public class SpawnManager : MonoBehaviour
         DetectTubes();
 
         SpawnBalls();
+        CheckSpawnedBalls();
+    }
+
+    private void CheckSpawnedBalls()
+    {
+        if (blue > 4 || red > 4 || yellow > 4 || green > 4 || orange > 4)
+        {
+            levelManager.RestartScene();
+        }
     }
 
     // Detects the balls that will be spawned in the level
@@ -145,45 +154,40 @@ public class SpawnManager : MonoBehaviour
     {
         int randomIndex = Random.Range(0, ballCount);
 
-        if ((randomIndex == 0 && blue >= 4))
+        if ((randomIndex == 0 && blue > 3))
         {
-            randomIndex = Random.Range(0, ballCount);
             while (randomIndex == 0)
             {
                 randomIndex = Random.Range(0, ballCount);
             }
         }
 
-        if (randomIndex == 1 && red >= 4)
+        if (randomIndex == 1 && red > 3)
         {
-            randomIndex = Random.Range(0, ballCount);
             while (randomIndex == 1)
             {
                 randomIndex = Random.Range(0, ballCount);
             }
         }
 
-        if (randomIndex == 2 && yellow >= 4)
+        if (randomIndex == 2 && yellow > 3)
         {
-            randomIndex = Random.Range(0, ballCount);
             while (randomIndex == 2)
             {
                 randomIndex = Random.Range(0, ballCount);
             }
         }
 
-        if (randomIndex == 3 && green >= 4)
+        if (randomIndex == 3 && green > 3)
         {
-            randomIndex = Random.Range(0, ballCount);
             while (randomIndex == 3)
             {
                 randomIndex = Random.Range(0, ballCount);
             }
         }
 
-        if (randomIndex == 4 && orange >= 4)
+        if (randomIndex == 4 && orange > 3)
         {
-            randomIndex = Random.Range(0, ballCount);
             while (randomIndex == 4)
             {
                 randomIndex = Random.Range(0, ballCount);

@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private List<GameObject> tubes = new List<GameObject>();
     [SerializeField] private GameObject celebrationParticles;
-    
+
     public int completedTubes;
     public int tubesToBeCompleted;
 
@@ -20,20 +20,22 @@ public class GameManager : MonoBehaviour
     private bool tubeIncreased;
     private bool celebrated;
 
+    private void Awake()
+    {
+        isGameActive = true;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        isGameActive = true;
         celebrated = false;
-        
+
         levelManager = FindObjectOfType<LevelManager>();
         uiManager = FindObjectOfType<UIManager>();
         inputManager = FindObjectOfType<InputManager>().GetComponent<InputManager>();
 
-        tubesToBeCompleted = PlayerPrefs.GetInt("LevelIndex") + 1;
+        tubesToBeCompleted = levelManager.levelIndex + 1;
         DetectTubes();
-
     }
 
     // Update is called once per frame
@@ -60,11 +62,10 @@ public class GameManager : MonoBehaviour
             Instantiate(celebrationParticles);
             for (int i = 0; i < tubes.Count; i++)
             {
-                tubes[i].GetComponent<TubeController>().enabled = true;
                 StartCoroutine(tubes[i].GetComponent<TubeController>().ShakeTube());
-                tubes[i].GetComponent<TubeController>().enabled = false;
             }
         }
+
         celebrated = true;
     }
 
@@ -78,7 +79,7 @@ public class GameManager : MonoBehaviour
             Debug.Log(completedTubes);
         }
     }
-    
+
     private void DetectTubes()
     {
         for (int i = 0; i < tubesToBeCompleted; i++)

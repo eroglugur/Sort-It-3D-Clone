@@ -4,21 +4,30 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    private int levelIndex = 1;
-    
+    public int levelIndex = PlayerPrefs.GetInt("LevelIndex");
+
     [SerializeField] private GameObject[] levels = new GameObject[4];
-    
-    public GameObject Level()
+
+    private GameObject Level()
     {
-        levels[levelIndex - 1] = Resources.Load<GameObject>("LevelPrefabs/" + "Level " + PlayerPrefs.GetInt("LevelIndex"));
+        if (PlayerPrefs.GetInt("LevelIndex") > 4)
+        {
+            PlayerPrefs.SetInt("LevelIndex", 1);
+        }
+        levelIndex = PlayerPrefs.GetInt("LevelIndex");
+
+        levels[PlayerPrefs.GetInt("LevelIndex") - 1] =
+            Resources.Load<GameObject>("LevelPrefabs/" + "Level " + PlayerPrefs.GetInt("LevelIndex"));
 
         return levels[PlayerPrefs.GetInt("LevelIndex") - 1];
     }
-    
-    private void Start()
+
+
+    private void Awake()
     {
         Instantiate(Level());
     }
+
     public void RestartScene()
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
@@ -27,8 +36,9 @@ public class LevelManager : MonoBehaviour
 
     public void LoadNextLevel()
     {
-        PlayerPrefs.SetInt("LevelIndex", levelIndex++);
-        
+        levelIndex++;
+        PlayerPrefs.SetInt("LevelIndex", levelIndex);
+
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentSceneIndex);
     }
