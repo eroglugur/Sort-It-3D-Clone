@@ -1,30 +1,32 @@
 using System;
 using UnityEngine;
 using DG.Tweening;
+using TMPro;
 
 public class BallController : MonoBehaviour
 {
     private TubeController tubeController;
     private BallController ballController;
     private InputManager inputManager;
-    
+
     private float ballRiseValueY = 12.0f;
     private float ballPlaceValueY = 12.0f;
     private float ballMoveTime = 0.25f;
-    
+
+    private bool shaked;
+
     private void Start()
     {
         inputManager = FindObjectOfType<InputManager>();
-        
+
         ballController = GetComponent<BallController>();
         ballController.enabled = false;
     }
-    
+
     public float SetPlaceValue(GameObject touchedObject)
     {
-        
         int ballCountInTube = touchedObject.GetComponent<TubeController>().CheckTubeElements();
-        
+
         switch (ballCountInTube)
         {
             case 0:
@@ -46,14 +48,28 @@ public class BallController : MonoBehaviour
 
     public void GoToTheTubeSelected(GameObject tubeSelected)
     {
+        bool translationComplete = false;
+
+
         Vector3 destination = new Vector3(tubeSelected.transform.position.x, transform.position.y,
             tubeSelected.transform.position.z);
 
         ballPlaceValueY = SetPlaceValue(tubeSelected);
 
-        transform.DOMove(destination, ballMoveTime).OnComplete(() => transform.DOMoveY(ballPlaceValueY, ballMoveTime));
+        transform.DOMove(destination, ballMoveTime)
+            .OnComplete(() => transform.DOMoveY(ballPlaceValueY, ballMoveTime));
     }
-    
+
+    public void ShakeBall()
+    {
+        shaked = false;
+        if (!shaked)
+        {
+            transform.DOShakePosition(0.5f, 0.50f, 25);
+            shaked = true;
+        }
+    }
+
     public void ExitTube()
     {
         transform.DOMoveY(ballRiseValueY, ballMoveTime);

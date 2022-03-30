@@ -6,6 +6,7 @@ public class LevelManager : MonoBehaviour
 {
     public int levelIndex = 1;
 
+    
 
     private void Update()
     {
@@ -21,5 +22,10 @@ public class LevelManager : MonoBehaviour
         
         SceneManager.LoadScene(currentSceneIndex);
     }
+
+   public void GetWinScreen()
+   {
+       Debug.Log("WIN!");
+   }
    
 }

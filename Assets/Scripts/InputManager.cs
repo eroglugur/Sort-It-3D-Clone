@@ -3,12 +3,12 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
     public bool isBallInTube;
-    
+
     private GameObject touchedGameObject;
-   [SerializeField] private GameObject[] ball = new GameObject[1];
+    [SerializeField] private GameObject[] ball = new GameObject[1];
 
     private BallController ballController;
-    
+
 
     private void Start()
     {
@@ -37,7 +37,14 @@ public class InputManager : MonoBehaviour
                     ball[0] = touchedGameObject.GetComponent<TubeController>().GetLatestAddedBall();
                 }
                 
-                ProcessTouch(touchedGameObject, ball[0]);
+                if (touchedGameObject.GetComponent<TubeController>().isTubeFull && !isBallInTube)
+                {
+                    ball[0].GetComponent<BallController>().ShakeBall();
+                }
+                else
+                {
+                    ProcessTouch(touchedGameObject, ball[0]);
+                }
             }
         }
     }
@@ -45,7 +52,7 @@ public class InputManager : MonoBehaviour
     private void ProcessTouch(GameObject tube, GameObject ballSelected)
     {
         ballController = ballSelected.GetComponent<BallController>();
-        
+
         if (isBallInTube)
         {
             ballController.enabled = true;
