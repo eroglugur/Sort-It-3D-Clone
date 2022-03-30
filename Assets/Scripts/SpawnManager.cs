@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class SpawnManager : MonoBehaviour
@@ -19,21 +18,18 @@ public class SpawnManager : MonoBehaviour
 
     private int blue, red, yellow, green, orange = 0;
 
-    private void Awake()
+    void Start()
     {
         levelManager = FindObjectOfType<LevelManager>();
         tubeController = FindObjectOfType<TubeController>();
         levelManager = FindObjectOfType<LevelManager>();
 
-        ballTypes = levelManager.levelIndex + 1;
-        tubeCount = levelManager.levelIndex + 2;
+        ballTypes = PlayerPrefs.GetInt("LevelIndex") + 1;
+        tubeCount = PlayerPrefs.GetInt("LevelIndex") + 2;
 
         tubes = new GameObject[tubeCount];
         levelBalls = new GameObject[ballTypes];
-    }
-
-    void Start()
-    {
+        
         DetectBalls();
         DetectTubes();
 

@@ -13,18 +13,25 @@ public class GameManager : MonoBehaviour
     public int tubesToBeCompleted;
 
     private LevelManager levelManager;
+    private UIManager uiManager;
+    private InputManager inputManager;
 
     public bool isGameActive;
     private bool tubeIncreased;
+    private bool celebrated;
 
 
     // Start is called before the first frame update
     void Start()
     {
         isGameActive = true;
+        celebrated = false;
+        
         levelManager = FindObjectOfType<LevelManager>();
+        uiManager = FindObjectOfType<UIManager>();
+        inputManager = FindObjectOfType<InputManager>().GetComponent<InputManager>();
 
-        tubesToBeCompleted = levelManager.levelIndex + 1;
+        tubesToBeCompleted = PlayerPrefs.GetInt("LevelIndex") + 1;
         DetectTubes();
 
     }
@@ -35,18 +42,30 @@ public class GameManager : MonoBehaviour
         if (completedTubes == tubesToBeCompleted)
         {
             CelebrateWin();
+            StartCoroutine("SetWinScreenActive");
         }
+    }
+
+    IEnumerator SetWinScreenActive()
+    {
+        yield return new WaitForSeconds(1.5f);
+        uiManager.winScreen.SetActive(true);
+        inputManager.enabled = false;
     }
 
     private void CelebrateWin()
     {
-        Instantiate(celebrationParticles);
-        for (int i = 0; i < tubes.Count; i++)
+        if (!celebrated)
         {
-            tubes[i].GetComponent<TubeController>().enabled = true;
-            StartCoroutine(tubes[i].GetComponent<TubeController>().ShakeTube());
-            tubes[i].GetComponent<TubeController>().enabled = false;
+            Instantiate(celebrationParticles);
+            for (int i = 0; i < tubes.Count; i++)
+            {
+                tubes[i].GetComponent<TubeController>().enabled = true;
+                StartCoroutine(tubes[i].GetComponent<TubeController>().ShakeTube());
+                tubes[i].GetComponent<TubeController>().enabled = false;
+            }
         }
+        celebrated = true;
     }
 
     public void UpdateTubeCount()

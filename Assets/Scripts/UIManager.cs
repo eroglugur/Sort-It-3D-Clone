@@ -6,20 +6,20 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameObject pauseScreen;
+    public GameObject winScreen;
 
     private GameManager gameManager;
     private LevelManager levelManager;
     
     [SerializeField] private TMP_Text levelText;
 
-    
     // Start is called before the first frame update
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
         levelManager = FindObjectOfType<LevelManager>();
 
-        levelText.text = "Level " + levelManager.levelIndex;
+        levelText.text = "Level " + PlayerPrefs.GetInt("LevelIndex");
     }
     
     public void Pause()
@@ -50,5 +50,10 @@ public class UIManager : MonoBehaviour
     public void Restart()
     {
         levelManager.RestartScene();
+    }
+
+    public void NextLevel()
+    {
+        levelManager.LoadNextLevel();
     }
 }
