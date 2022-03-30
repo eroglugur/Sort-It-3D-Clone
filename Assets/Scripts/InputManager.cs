@@ -1,15 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
 using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
     [SerializeField] private bool touched = false;
     [SerializeField] private bool isUp = false;
-    private bool isDestinationSet = false;
+    public bool isDestinationSet = false;
 
-    [SerializeField] private GameObject[] touchedObject = new GameObject[1];
+    [SerializeField] private GameObject[] tube = new GameObject[1];
 
     private GameObject destinationObject;
 
@@ -17,22 +16,22 @@ public class InputManager : MonoBehaviour
     {
         if (!touched && !isUp)
         {
+            isDestinationSet = false;
             DetectTubeWithTouch();
         }
 
-        if (touched && isUp && touchedObject[0] != null)
+        if (touched && isUp && tube[0] != null)
         {
             GameObject destinationObject = GetDestinationWithTouch();
 
             if (!destinationObject.GetComponent<TubeController>().isTubeFull && !isDestinationSet)
             {
-                touchedObject[0].GetComponent<Movement>().SetDestination(destinationObject);
-                touchedObject[0].GetComponent<TubeController>().RemoveBall();
+                tube[0].GetComponent<Movement>().SetDestination(destinationObject);
 
-                isDestinationSet = true;
-                touched = false;
+                tube[0] = null;
                 isUp = false;
-                touchedObject[0] = null;
+                touched = false;
+                isDestinationSet = true;
             }
         }
     }
@@ -49,7 +48,7 @@ public class InputManager : MonoBehaviour
             {
                 if (hit.collider.CompareTag("Tube"))
                 {
-                    touchedObject[0] = hit.transform.gameObject;
+                    tube[0] = hit.transform.gameObject;
                     EnableMovementToTouchedObject();
                 }
             }
@@ -80,9 +79,10 @@ public class InputManager : MonoBehaviour
 
     private void EnableMovementToTouchedObject()
     {
-        touchedObject[0].GetComponent<Movement>().enabled = true;
+        tube[0].GetComponent<Movement>().enabled = true;
 
-        touchedObject[0].GetComponent<Movement>().RiseBall(touchedObject[0]);
+        tube[0].GetComponent<Movement>().RiseBall(tube[0]);
+
         touched = true;
         isUp = true;
     }

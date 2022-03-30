@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
 public class TubeController : MonoBehaviour
 {
-    public GameObject[] balls = new GameObject[4];
+    public List<GameObject> balls = new List<GameObject>();
+
     public bool isTubeFull;
     public bool hasRemoved = false;
 
@@ -29,8 +31,9 @@ public class TubeController : MonoBehaviour
 
     public GameObject GetLatestAddedBall()
     {
-        int sphereNumber = CheckTubeElements() - 1;
-        return balls[sphereNumber];
+        GameObject latestAddedBall = balls[balls.Count - 1];
+        Debug.Log(balls.Count);
+        return latestAddedBall;
     }
 
     // Removes the latest added ball from the array
@@ -38,10 +41,8 @@ public class TubeController : MonoBehaviour
     {
         if (!hasRemoved)
         {
-            int sphereNumber = CheckTubeElements() - 1;
-            balls[sphereNumber] = null;
+            balls.Remove(balls[balls.Count - 1]);
             hasRemoved = true;
-            Debug.Log(sphereNumber);
         }
     }
 
@@ -69,11 +70,10 @@ public class TubeController : MonoBehaviour
                     break;
             }
 
-            int sphereNumber = CheckTubeElements();
-            balls[sphereNumber] = Instantiate(ball, spawnPosition, Quaternion.identity);
+            balls.Add(Instantiate(ball, spawnPosition, Quaternion.identity)); 
         }
     }
-    
+
     // Adds the ball to the first empty element of the array
     public void AddBall(GameObject ball)
     {
@@ -98,8 +98,7 @@ public class TubeController : MonoBehaviour
                     break;
             }
 
-            int sphereNumber = CheckTubeElements();
-            balls[sphereNumber] = ball;
+            balls.Add(ball);
         }
     }
 
@@ -116,20 +115,6 @@ public class TubeController : MonoBehaviour
     // Checks the number of game objects in the array that are not null
     public int CheckTubeElements()
     {
-        int sphereCount = 0;
-
-        foreach (GameObject sphere in balls)
-        {
-            if (sphere == null)
-            {
-                return sphereCount;
-            }
-            else
-            {
-                sphereCount++;
-            }
-        }
-
-        return sphereCount;
+        return balls.Count;
     }
 }

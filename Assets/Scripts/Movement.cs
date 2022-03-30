@@ -6,9 +6,10 @@ using DG.Tweening;
 
 public class Movement : MonoBehaviour
 {
+    
     private float ballRiseValueY = 11.0f;
     private float ballPlaceValueY = 11.0f;
-    private float ballMoveTime = 0.5f;
+    private float ballMoveTime = 0.35f;
 
     [SerializeField] private GameObject[] ball = new GameObject[1];
 
@@ -23,31 +24,29 @@ public class Movement : MonoBehaviour
 
     public void RiseBall(GameObject touchedObject)
     {
-        Debug.Log("Touched " + touchedObject.transform.name);
-
         ball[0] = GetBall(touchedObject);
-
+        
+        touchedObject.GetComponent<TubeController>().RemoveBall();
         ball[0].transform.DOMoveY(ballRiseValueY, ballMoveTime);
     }
     
     public void PlaceBall(GameObject touchedObject, GameObject ball)
     {
-        Debug.Log("Touched " + touchedObject.transform.name);
         
         int ballCountInTube = touchedObject.GetComponent<TubeController>().CheckTubeElements();
         
         switch (ballCountInTube)
         {
-            case 1:
+            case 0:
                 ballPlaceValueY = 1f;
                 break;
-            case 2:
+            case 1:
                 ballPlaceValueY = 3f;
                 break;
-            case 3:
+            case 2:
                 ballPlaceValueY = 5f;
                 break;
-            case 4:
+            case 3:
                 ballPlaceValueY = 7f;
                 break;
         }
@@ -66,6 +65,15 @@ public class Movement : MonoBehaviour
 
         ball[0].transform.DOMove(direction, ballMoveTime).OnComplete(() => PlaceBall(touchedObject, ball[0]));
         touchedObject.GetComponent<TubeController>().AddBall(ball[0]);
-        
+    }
+
+    public void Shake()
+    {
+        bool shaked = false;
+        if (!shaked)
+        {
+            ball[0].transform.DOShakePosition(0.5f,1.5f);
+            shaked = true;
+        }
     }
 }
