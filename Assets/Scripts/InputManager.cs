@@ -5,40 +5,34 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    [SerializeField] private bool touched;
-    [SerializeField] private bool isUp;
+    [SerializeField] private bool touched = false;
+    [SerializeField] private bool isUp = false;
     private bool isDestinationSet = false;
 
     [SerializeField] private GameObject[] touchedObject = new GameObject[1];
 
     private GameObject destinationObject;
-    
-    void Start()
+
+    void Update()
     {
-        bool isGameActive = true;
-        while (isGameActive)
+        if (!touched && !isUp)
         {
-            if (!touched && !isUp)
+            DetectTubeWithTouch();
+        }
+
+        if (touched && isUp && touchedObject[0] != null)
+        {
+            GameObject destinationObject = GetDestinationWithTouch();
+
+            if (!destinationObject.GetComponent<TubeController>().isTubeFull && !isDestinationSet)
             {
-                DetectTubeWithTouch();
-            }
+                touchedObject[0].GetComponent<Movement>().SetDestination(destinationObject);
+                touchedObject[0].GetComponent<TubeController>().RemoveBall();
 
-            if (touched && isUp && touchedObject[0] != null)
-            {
-                GameObject destinationObject = GetDestinationWithTouch();
-
-                if (!destinationObject.GetComponent<TubeController>().isTubeFull && !isDestinationSet)
-                {
-                    touchedObject[0].GetComponent<Movement>().SetDestination(destinationObject);
-                    touchedObject[0].GetComponent<TubeController>().RemoveBall();
-
-                    isDestinationSet = true;
-                    touched = false;
-                    isUp = false;
-                    touchedObject[0] = null;
-                }
-
-                DetectTubeWithTouch();
+                isDestinationSet = true;
+                touched = false;
+                isUp = false;
+                touchedObject[0] = null;
             }
         }
     }
@@ -86,16 +80,10 @@ public class InputManager : MonoBehaviour
 
     private void EnableMovementToTouchedObject()
     {
-        if (!touched && !isUp)
-        {
-            touchedObject[0].GetComponent<Movement>().enabled = true;
+        touchedObject[0].GetComponent<Movement>().enabled = true;
 
-            touchedObject[0].GetComponent<Movement>().RiseBall(touchedObject[0]);
-            touched = true;
-            isUp = true;
-        }
+        touchedObject[0].GetComponent<Movement>().RiseBall(touchedObject[0]);
+        touched = true;
+        isUp = true;
     }
-
-
-    
 }
