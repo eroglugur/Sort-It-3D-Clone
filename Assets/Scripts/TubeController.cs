@@ -8,15 +8,14 @@ public class TubeController : MonoBehaviour
     public List<GameObject> balls = new List<GameObject>();
 
     public bool isTubeFull;
-    public bool hasRemoved = false;
 
     private int blue, red, yellow, green, orange = 0;
 
     void Update()
     {
         CheckIfTubeIsFull();
+        
     }
-
     private void CheckIfTubeIsFull()
     {
         if (CheckTubeElements() >= 4)
@@ -31,19 +30,24 @@ public class TubeController : MonoBehaviour
 
     public GameObject GetLatestAddedBall()
     {
-        GameObject latestAddedBall = balls[balls.Count - 1];
-        Debug.Log(balls.Count);
+        GameObject latestAddedBall;
+        if (balls.Count - 1 >= 0)
+        {
+            latestAddedBall = balls[balls.Count - 1];
+        }
+        else
+        {
+            latestAddedBall = null;
+        }
         return latestAddedBall;
     }
 
     // Removes the latest added ball from the array
     public void RemoveBall()
     {
-        if (!hasRemoved)
-        {
+       
             balls.Remove(balls[balls.Count - 1]);
-            hasRemoved = true;
-        }
+        
     }
 
     // Spawns the ball to the first empty elements of the array
@@ -70,7 +74,7 @@ public class TubeController : MonoBehaviour
                     break;
             }
 
-            balls.Add(Instantiate(ball, spawnPosition, Quaternion.identity)); 
+            balls.Add(Instantiate(ball, spawnPosition, Quaternion.identity));
         }
     }
 

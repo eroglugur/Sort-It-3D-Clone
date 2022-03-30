@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6463871234474720836}
   - component: {fileID: 6463871234474720837}
   - component: {fileID: 8941476225574310398}
+  - component: {fileID: -2775435499371655679}
   m_Layer: 0
   m_Name: Purple Ball
   m_TagString: Untagged
@@ -103,8 +104,24 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6463871234474720838}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 665e021c44be74443b075c6da11d2316, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &-2775435499371655679
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6463871234474720838}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

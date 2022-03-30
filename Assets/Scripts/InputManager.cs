@@ -1,42 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    [SerializeField] private bool touched = false;
-    [SerializeField] private bool isUp = false;
-    public bool isDestinationSet = false;
+    public bool isBallInTube;
+    
+    private GameObject touchedGameObject;
+   [SerializeField] private GameObject[] ball = new GameObject[1];
 
-    [SerializeField] private GameObject[] tube = new GameObject[1];
+    private BallController ballController;
+    
 
-    private GameObject destinationObject;
+    private void Start()
+    {
+        isBallInTube = true;
+    }
 
     void Update()
     {
-        if (!touched && !isUp)
-        {
-            isDestinationSet = false;
-            DetectTubeWithTouch();
-        }
-
-        if (touched && isUp && tube[0] != null)
-        {
-            GameObject destinationObject = GetDestinationWithTouch();
-
-            if (!destinationObject.GetComponent<TubeController>().isTubeFull && !isDestinationSet)
-            {
-                tube[0].GetComponent<Movement>().SetDestination(destinationObject);
-
-                tube[0] = null;
-                isUp = false;
-                touched = false;
-                isDestinationSet = true;
-            }
-        }
+        GetTouch();
     }
 
-    void DetectTubeWithTouch()
+    private void GetTouch()
     {
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
         {
@@ -44,46 +28,34 @@ public class InputManager : MonoBehaviour
 
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit) && hit.collider.gameObject.CompareTag("Tube"))
             {
-                if (hit.collider.CompareTag("Tube"))
+                touchedGameObject = hit.collider.gameObject;
+
+                if (isBallInTube)
                 {
-                    tube[0] = hit.transform.gameObject;
-                    EnableMovementToTouchedObject();
+                    ball[0] = touchedGameObject.GetComponent<TubeController>().GetLatestAddedBall();
                 }
+                
+                ProcessTouch(touchedGameObject, ball[0]);
             }
         }
     }
 
-    private GameObject GetDestinationWithTouch()
+    private void ProcessTouch(GameObject tube, GameObject ballSelected)
     {
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
+        ballController = ballSelected.GetComponent<BallController>();
+        
+        if (isBallInTube)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
-
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                if (hit.collider.CompareTag("Tube"))
-                {
-                    destinationObject = hit.transform.gameObject;
-                    return destinationObject;
-                }
-            }
+            ballController.enabled = true;
+            ballController.ExitTube();
         }
-
-        return destinationObject;
-    }
-
-
-    private void EnableMovementToTouchedObject()
-    {
-        tube[0].GetComponent<Movement>().enabled = true;
-
-        tube[0].GetComponent<Movement>().RiseBall(tube[0]);
-
-        touched = true;
-        isUp = true;
+        else
+        {
+            ballController.enabled = false;
+            ballController.GoToTheTubeSelected(tube);
+            ball[0] = null;
+        }
     }
 }
