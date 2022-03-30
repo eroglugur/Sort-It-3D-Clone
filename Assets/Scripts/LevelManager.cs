@@ -10,10 +10,12 @@ public class LevelManager : MonoBehaviour
 
     private GameObject Level()
     {
-        if (PlayerPrefs.GetInt("LevelIndex") > 4)
+        if (PlayerPrefs.GetInt("LevelIndex") != 1 && PlayerPrefs.GetInt("LevelIndex") != 2 &&
+            PlayerPrefs.GetInt("LevelIndex") != 3 && PlayerPrefs.GetInt("LevelIndex") != 4)
         {
             PlayerPrefs.SetInt("LevelIndex", 1);
         }
+
         levelIndex = PlayerPrefs.GetInt("LevelIndex");
 
         levels[PlayerPrefs.GetInt("LevelIndex") - 1] =
